@@ -1,4 +1,5 @@
-from django.db.models import IntegerField, Model, models
+from django.db import models
+from django.db.models import IntegerField, Model
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth.models import User
 
