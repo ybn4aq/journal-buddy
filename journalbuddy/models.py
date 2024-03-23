@@ -4,6 +4,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
 import datetime
+import django.utils.timezone as tz
 
 
 class UserProfile(models.Model):
@@ -21,7 +22,7 @@ class UserProfile(models.Model):
     def create_or_update_user_profile(user, **kwargs):
         # if profile doesn't exist, create one. otherwise, update it.
         profile, created = UserProfile.objects.get_or_create(user=user, defaults=kwargs)
-        # if profile already exists, update the info.
+        # if profile already exists, update the info. 
         if not created:
             for key, value in kwargs.items():
                 setattr(profile, key, value)
