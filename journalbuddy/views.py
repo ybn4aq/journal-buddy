@@ -6,6 +6,9 @@ from .models import Journal
 from .forms import JournalForm
 from django.views import generic
 from .models import Journal
+from .utils import Calendar
+from django.utils.safestring import mark_safe
+from datetime import datetime
 
 # Create your views here.
 def journal(request):
@@ -35,3 +38,20 @@ class JournalList(generic.ListView):
         return entries
     
     
+class CalendarView(generic.ListView):
+    model = Journal
+    template_name = "../templates/calendar.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        d = self.get_date(self.request.GET.get("day", None))
+        cal = Calendar(d.year, d.month)
+        html_cal = cal.formatmonth(withyear=True)
+        context["calendar"] = mark_safe(html_cal)
+        return context
+
+    def get_date(self, day):
+        if day:
+            year, month = (int(x) for x in day.split('-'))
+            return datetime.date(year, month, day=1)
+        return datetime.today()
