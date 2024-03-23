@@ -33,6 +33,9 @@ class Journal(models.Model):
             MinValueValidator(1)
         ])
     media = models.ImageField()
+    iteration = models.IntegerField()
+    author = models.ForeignKey(User)  # TODO: make sure this works
+    muted = models.BooleanField(default=False)
 
     def __str__(self):
         return "Date: " + self.date + "\nContent: " + self.content + "\nRate: " + self.rate
