@@ -34,9 +34,9 @@ class Journal(models.Model):
     rate = models.IntegerField(validators=[MaxValueValidator(5), MinValueValidator(1)])
     media = models.ImageField(blank = True)
     iteration = models.IntegerField(default=1)
-    # author = models.ForeignKey(
-    #     User, on_delete=models.CASCADE
-    # )  # TODO: make sure this works
+    author = models.ForeignKey(
+        User, on_delete=models.CASCADE, default=1
+    )  # TODO: make sure this works
     muted = models.BooleanField(default=False)
 
     def __str__(self):

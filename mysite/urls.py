@@ -17,8 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from journalbuddy.views import journal_for_user_and_day
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('journalbuddy/',include(('journalbuddy.urls','journalbuddy'),namespace = 'journalbuddy'))
+    path('journalbuddy/',include(('journalbuddy.urls','journalbuddy'),namespace = 'journalbuddy')),
+    path('journal/<str:username>/<int:year>/<int:month>/<int:day>/', journal_for_user_and_day, name='journal_for_day')
 ]
 

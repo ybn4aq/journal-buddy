@@ -1,5 +1,6 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse
 from django.contrib import messages
 from .models import Journal
@@ -38,6 +39,12 @@ class JournalList(generic.ListView):
         context = super().get_context_data(**kwargs)
         context["entries"] = Journal.objects.all()
         return context
-    
-    
-    
+
+def journal_for_user_and_day(request, username, year, month, day):
+    user = get_object_or_404(User, username=username)
+    try:
+        journal_entry = Journal.objects.get(author=user, date__year=year, date__month=month, date__day=day)
+    except Journal.DoesNotExist:
+        raise Http404("No Journal entry found for this date.")
+
+    return render(request, 'journalbuddy/solo_journal.html', {'journal_entry': journal_entry})
