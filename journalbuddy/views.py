@@ -25,10 +25,13 @@ def journal(request):
     return render(request, "journalform.html", {'form': form})
 
 class JournalList(generic.ListView):
-    model = Journal
+    # model = Journal
     template_name = "journalList.html"
     context_object_name = "journal_list"
     
     def get_queryset(self):
         entries = Journal.objects.all()
+        # return render(request, 'journalbuddy/journalList.html', {'profiles': entries})
         return entries
+    
+    
