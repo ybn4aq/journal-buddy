@@ -23,7 +23,19 @@
   <body>
     
     <div>
-     
+     <h1>
+      My Entries
+     </h1>
+     <div>
+      {% for entry in entries %}
+          <tr>
+            <!-- <td><a href = "/journal/{{place.id}}"> {{ place.name }} </a></td> -->
+            <td>
+                {{ entry.content }}
+            </td>
+            </tr>
+        {% endfor %}
+     </div>
     </div>
 
     <!-- Include Bootstrap JS -->
