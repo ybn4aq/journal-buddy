@@ -30,7 +30,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    "https://journal-buddy-jb-06547030c822.herokuapp.com/",
+    'journal-buddy-jb-06547030c822.herokuapp.com/',
 ]
 
 
