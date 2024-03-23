@@ -8,7 +8,7 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="../static/css/solo_journal.css" />
+    <link rel="stylesheet" href="../../static/css/list.css" />
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -20,21 +20,43 @@
     <meta name="keywords" content="mental health, journaling" />
     <title>View Journal</title>
   </head>
+
   <body>
-    
     <div>
      <h1>
       My Entries
      </h1>
-     <div>
-      {% for entry in entries %}
-          <tr>
-            <!-- <td><a href = "/journal/{{place.id}}"> {{ place.name }} </a></td> -->
-            <td>
-                {{ entry.content }}
-            </td>
-            </tr>
-        {% endfor %}
+     <div class = "container">
+         
+        
+        <table class="table table-bordered table-striped table-hover table-sm">
+          <thead>
+              <tr>
+              <th scope="col">Date</th>
+              <th scope="col">Journal</th>
+              <th scope="col">Rate</th>
+              </tr>
+          </thead>
+          <tbody>
+
+                  
+                  {% for entry in entries %}
+                  <tr>
+                      <td>
+                          {{ entry.date }}
+                      </td>
+                      <td>
+                        Journal #{{ entry.iteration }}
+                    </td>
+                    <td>
+                      {{ entry.rate }}
+                  </td>
+                      
+                      </tr>
+                  {% endfor %}
+          
+          </tbody>
+      </table>
      </div>
     </div>
 
