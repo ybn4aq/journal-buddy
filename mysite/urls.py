@@ -16,7 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from journalbuddy.views import user_profiles
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('profiles/', user_profiles, name='user_profiles'),
 ]

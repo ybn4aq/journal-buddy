@@ -1,3 +1,6 @@
 from django.shortcuts import render
+from .models import UserProfile
 
-# Create your views here.
+def user_profiles(request):
+    profiles = UserProfile.objects.all()  # Fetch all UserProfile instances
+    return render(request, 'journalbuddy/user_profiles.html', {'profiles': profiles})
