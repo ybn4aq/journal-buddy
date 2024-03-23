@@ -7,6 +7,9 @@ from .models import Journal
 from .forms import JournalForm
 from django.views import generic
 from .models import Journal
+from .utils import Calendar
+from django.utils.safestring import mark_safe
+from datetime import datetime
 
 # Create your views here.
 def journal(request):
@@ -34,17 +37,37 @@ class JournalList(generic.ListView):
         entries = Journal.objects.all()
         # return render(request, 'journalbuddy/journalList.html', {'profiles': entries})
         return entries
-
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["entries"] = Journal.objects.all()
         return context
 
-def journal_for_user_and_day(request, username, year, month, day):
-    user = get_object_or_404(User, username=username)
-    try:
-        journal_entry = Journal.objects.get(author=user, date__year=year, date__month=month, date__day=day)
-    except Journal.DoesNotExist:
-        raise Http404("No Journal entry found for this date.")
+    def journal_for_user_and_day(request, username, year, month, day):
+        user = get_object_or_404(User, username=username)
+        try:
+            journal_entry = Journal.objects.get(author=user, date__year=year, date__month=month, date__day=day)
+        except Journal.DoesNotExist:
+            raise Http404("No Journal entry found for this date.")
 
-    return render(request, 'journalbuddy/solo_journal.html', {'journal_entry': journal_entry})
+        return render(request, 'journalbuddy/solo_journal.html', {'journal_entry': journal_entry})
+    
+
+class CalendarView(generic.ListView):
+    model = Journal
+    template_name = "../templates/calendar.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        d = self.get_date(self.request.GET.get("day", None))
+        cal = Calendar(d.year, d.month)
+        html_cal = cal.formatmonth(withyear=True)
+        context["calendar"] = mark_safe(html_cal)
+        return context
+
+    def get_date(self, day):
+        return datetime.today()
+        if day:
+            year, month = (int(x) for x in day.split('-'))
+            return datetime.date(year, month, day=1)
+        return datetime.today()
