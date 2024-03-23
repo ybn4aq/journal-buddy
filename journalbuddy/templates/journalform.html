@@ -1,0 +1,15 @@
+<html>
+<body>
+
+<h2>Journal Entry</h2>
+
+<form action="{% url 'app:report' %}">
+  <input type="text" id="content" name="content" value="What's going on?"><br>
+  <label for="rate">Rating:</label><br>
+  <input type="range" id="rate" name="rate" min="1" max="5"><br><br>
+  <input type="submit" value="Submit">
+</form> 
+
+
+</body>
+</html>
