@@ -34,7 +34,7 @@ class Journal(models.Model):
         ])
     media = models.ImageField()
     iteration = models.IntegerField()
-    author = models.ForeignKey(User)  # TODO: make sure this works
+    # author = models.ForeignKey(User)  # TODO: make sure this works
     muted = models.BooleanField(default=False)
 
     def __str__(self):
