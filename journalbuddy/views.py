@@ -51,6 +51,7 @@ class CalendarView(generic.ListView):
         return context
 
     def get_date(self, day):
+        return datetime.today()
         if day:
             year, month = (int(x) for x in day.split('-'))
             return datetime.date(year, month, day=1)

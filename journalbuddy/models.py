@@ -4,6 +4,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
 import datetime
+import django.utils.timezone as tz
 
 
 class UserProfile(models.Model):
@@ -29,7 +30,7 @@ class UserProfile(models.Model):
 
 
 class Journal(models.Model):
-    date = models.DateField(default=datetime.date.today())
+    date = models.DateField(default=tz.localdate())
     content = models.CharField(max_length=1000)
     good_things = ArrayField(models.CharField(max_length=200), default=None)
     rate = models.IntegerField(validators=[MaxValueValidator(5), MinValueValidator(1)])

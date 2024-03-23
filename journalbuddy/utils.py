@@ -27,7 +27,7 @@ class Calendar(HTMLCalendar):
 	# formats a month as a table
 	# filter events by year and month
 	def formatmonth(self, withyear=True):
-		journals = Journal.objects.filter(year=self.year, month=self.month)
+		journals = Journal.objects.filter() # TODO: how do i filter journals by year, month?
 		cal = f'<table border="0" cellpadding="0" cellspacing="0" class="calendar">\n'
 		cal += f'{self.formatmonthname(self.year, self.month, withyear=withyear)}\n'
 		cal += f'{self.formatweekheader()}\n'
