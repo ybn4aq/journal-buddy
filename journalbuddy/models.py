@@ -2,6 +2,8 @@ from django.db import models
 from django.db.models import IntegerField, Model
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth.models import User
+from django.contrib.postgres.fields import ArrayField
+import datetime
 
 class UserProfile(models.Model):
     #one to one - each profile has one user, each user has one profile
@@ -23,8 +25,9 @@ class UserProfile(models.Model):
             profile.save()
 
 class Journal(models.Model):
-    date = models.DateField
-    content = models.CharField(max_length=500)
+    date = models.DateField(default=datetime.date)
+    content = models.CharField(max_length=1000)
+    good_things = ArrayField(models.CharField(max_length=200))
     rate = models.IntegerField(validators=[
             MaxValueValidator(5),
             MinValueValidator(1)
