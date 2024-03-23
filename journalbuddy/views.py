@@ -71,3 +71,8 @@ class CalendarView(generic.ListView):
             year, month = (int(x) for x in day.split('-'))
             return datetime.date(year, month, day=1)
         return datetime.today()
+    
+
+class HomeView(generic.TemplateView):
+    template_name = "../templates/index.html"
+    
