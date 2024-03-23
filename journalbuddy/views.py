@@ -45,15 +45,26 @@ class JournalList(generic.ListView):
         context["entries"] = Journal.objects.all()
         return context
 
-    def journal_for_user_and_day(request, username, year, month, day):
+    def journal_for_user_and_day(request, username, journal_id):
         user = get_object_or_404(User, username=username)
         try:
-            journal_entry = Journal.objects.get(author=user, date__year=year, date__month=month, date__day=day)
+            journal_entry = Journal.objects.get(author=user, id = journal_id)
         except Journal.DoesNotExist:
             raise Http404("No Journal entry found for this date.")
 
         return render(request, 'journalbuddy/solo_journal.html', {'journal_entry': journal_entry})
+
+
     
+    # def see_journal(request, journal_id):
+    #     if request.user.is_authenticated:
+    #         return render(request, "journalList.html", {"journal_id":journal_id})
+    #     else:
+    #         return redirect('')
+    
+# def journal_detail(request, id):
+#     journal_entry = get_object_or_404(Journal, id=id)
+#     return render(request, 'journalbuddy/solo_journal.html', {'journal_entry': journal_entry})
 
 class CalendarView(generic.ListView):
     model = Journal
