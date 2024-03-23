@@ -5,10 +5,13 @@ from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
 import datetime
 
+
 class UserProfile(models.Model):
-    #one to one - each profile has one user, each user has one profile
-    #on delete cascade - when a userProfile is deleted, so is the user
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile') #user.profile
+    # one to one - each profile has one user, each user has one profile
+    # on delete cascade - when a userProfile is deleted, so is the user
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name="profile"
+    )  # user.profile
     hobbies = models.TextField(blank=True, null=True)
 
     def __str__(self):
@@ -16,26 +19,28 @@ class UserProfile(models.Model):
 
     @staticmethod
     def create_or_update_user_profile(user, **kwargs):
-        #if profile doesn't exist, create one. otherwise, update it.
+        # if profile doesn't exist, create one. otherwise, update it.
         profile, created = UserProfile.objects.get_or_create(user=user, defaults=kwargs)
-        #if profile already exists, update the info.
+        # if profile already exists, update the info.
         if not created:
             for key, value in kwargs.items():
                 setattr(profile, key, value)
             profile.save()
 
+
 class Journal(models.Model):
     date = models.DateField(default=datetime.date)
     content = models.CharField(max_length=1000)
     good_things = ArrayField(models.CharField(max_length=200), default=None)
-    rate = models.IntegerField(validators=[
-            MaxValueValidator(5),
-            MinValueValidator(1)
-        ])
+    rate = models.IntegerField(validators=[MaxValueValidator(5), MinValueValidator(1)])
     media = models.ImageField()
-    iteration = models.IntegerField()
-    author = models.ForeignKey(User)  # TODO: make sure this works
+    iteration = models.IntegerField(default=1)
+    author = models.ForeignKey(
+        User, on_delete=models.CASCADE
+    )  # TODO: make sure this works
     muted = models.BooleanField(default=False)
 
     def __str__(self):
-        return "Date: " + self.date + "\nContent: " + self.content + "\nRate: " + self.rate
+        return (
+            "Date: " + self.date + "\nContent: " + self.content + "\nRate: " + self.rate
+        )
