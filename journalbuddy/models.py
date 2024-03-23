@@ -27,7 +27,7 @@ class UserProfile(models.Model):
 class Journal(models.Model):
     date = models.DateField(default=datetime.date)
     content = models.CharField(max_length=1000)
-    good_things = ArrayField(models.CharField(max_length=200))
+    good_things = ArrayField(models.CharField(max_length=200), default=None)
     rate = models.IntegerField(validators=[
             MaxValueValidator(5),
             MinValueValidator(1)
