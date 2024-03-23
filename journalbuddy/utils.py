@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from calendar import HTMLCalendar
-from .models import Event, Journal
+from .models import Journal
 
 class Calendar(HTMLCalendar):
 	def __init__(self, year=None, month=None):
@@ -27,11 +27,10 @@ class Calendar(HTMLCalendar):
 	# formats a month as a table
 	# filter events by year and month
 	def formatmonth(self, withyear=True):
-		events = Event.objects.filter(start_time__year=self.year, start_time__month=self.month)
-
+		journals = Journal.objects.filter(year=self.year, month=self.month)
 		cal = f'<table border="0" cellpadding="0" cellspacing="0" class="calendar">\n'
 		cal += f'{self.formatmonthname(self.year, self.month, withyear=withyear)}\n'
 		cal += f'{self.formatweekheader()}\n'
 		for week in self.monthdays2calendar(self.year, self.month):
-			cal += f'{self.formatweek(week, events)}\n'
+			cal += f'{self.formatweek(week, journals)}\n'
 		return cal
