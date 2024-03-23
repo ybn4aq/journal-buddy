@@ -31,17 +31,15 @@ class UserProfile(models.Model):
 class Journal(models.Model):
     date = models.DateField(default=datetime.date.today())
     content = models.CharField(max_length=1000)
-    good_things = ArrayField(models.CharField(max_length=200), default=None)
     rate = models.IntegerField(validators=[MaxValueValidator(5), MinValueValidator(1)])
     media = models.ImageField(blank = True)
     iteration = models.IntegerField(default=1)
-    # author = models.ForeignKey(
-    #     User, on_delete=models.CASCADE
-    # )  # TODO: make sure this works
+    author = models.ForeignKey(
+        User, on_delete=models.CASCADE, default=1
+    )  # TODO: make sure this works
     muted = models.BooleanField(default=False)
 
     def __str__(self):
         return (
-            # "Date: " + self.date.strftime("%m/%d/%Y") + "\nContent: " + self.content + "\nRate: " + self.rate
-            "test"
+            self.content
         )
