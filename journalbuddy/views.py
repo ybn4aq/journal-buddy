@@ -22,7 +22,7 @@ def journal(request):
     else:
         form = JournalForm()
 
-    return render(request, "journalform.html", {'form': form})
+    return render(request, "journalbuddy/journalform.html", {'form': form})
 
 class JournalList(generic.ListView):
     model = Journal
