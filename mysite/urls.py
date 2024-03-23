@@ -20,5 +20,5 @@ from journalbuddy.views import user_profiles
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('profiles/', user_profiles, name='user_profiles'),
+    path('', user_profiles, name='user_profiles'),
 ]
