@@ -1,4 +1,5 @@
-from django.db import models
+from django.db.models import IntegerField, Model, models
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth.models import User
 
 class UserProfile(models.Model):
@@ -20,3 +21,14 @@ class UserProfile(models.Model):
                 setattr(profile, key, value)
             profile.save()
 
+class Journal(models.Model):
+    date = models.DateField
+    content = models.CharField(max_length=500)
+    rate = models.IntegerField(validators=[
+            MaxValueValidator(5),
+            MinValueValidator(1)
+        ])
+    media = models.ImageField()
+
+    def __str__(self):
+        return "Date: " + self.date + "\nContent: " + self.content + "\nRate: " + self.rate
