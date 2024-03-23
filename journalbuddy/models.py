@@ -21,7 +21,7 @@ class UserProfile(models.Model):
     def create_or_update_user_profile(user, **kwargs):
         # if profile doesn't exist, create one. otherwise, update it.
         profile, created = UserProfile.objects.get_or_create(user=user, defaults=kwargs)
-        # if profile already exists, update the info.
+        # if profile already exists, update the info. 
         if not created:
             for key, value in kwargs.items():
                 setattr(profile, key, value)
@@ -29,7 +29,7 @@ class UserProfile(models.Model):
 
 
 class Journal(models.Model):
-    date = models.DateField(default=datetime.date)
+    date = models.DateField(default=datetime.date.today)
     content = models.CharField(max_length=1000)
     good_things = ArrayField(models.CharField(max_length=200), default=None)
     rate = models.IntegerField(validators=[MaxValueValidator(5), MinValueValidator(1)])
