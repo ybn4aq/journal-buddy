@@ -27,12 +27,15 @@ class UserProfile(models.Model):
 class Journal(models.Model):
     date = models.DateField(default=datetime.date)
     content = models.CharField(max_length=1000)
-    good_things = ArrayField(models.CharField(max_length=200))
+    good_things = ArrayField(models.CharField(max_length=200), default=None)
     rate = models.IntegerField(validators=[
             MaxValueValidator(5),
             MinValueValidator(1)
         ])
     media = models.ImageField()
+    iteration = models.IntegerField()
+    author = models.ForeignKey(User)  # TODO: make sure this works
+    muted = models.BooleanField(default=False)
 
     def __str__(self):
         return "Date: " + self.date + "\nContent: " + self.content + "\nRate: " + self.rate
