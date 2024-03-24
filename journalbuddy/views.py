@@ -60,6 +60,7 @@ class JournalList(generic.ListView):
             user = get_object_or_404(User, username=self.request.user.username)
             context = super().get_context_data(**kwargs)
             context["entries"] = Journal.objects.filter(author = user)
+            context['today'] = datetime.date.today()
             todayexists = False #checking to see if there's an entry for today
             journal_entry = Journal.objects.filter(author=user, date = datetime.date.today())
             if len(journal_entry) > 0:
@@ -70,7 +71,7 @@ class JournalList(generic.ListView):
             context["todayexists"] = todayexists
             return context
         except:
-            return redirect("login") #go to login page 
+            return redirect("login") #go to login page
 
     def journal_for_user_and_day(request, username, journal_id):
         user = get_object_or_404(User, username=username)
@@ -80,11 +81,11 @@ class JournalList(generic.ListView):
             raise Http404("No Journal entry found for this date.")
 
         return render(request, 'journalbuddy/solo_journal.html', {'journal_entry': journal_entry})
-        
+
 class PickMeUp(generic.ListView):
     model = Journal
     template_name = "pick_me_up.html"
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = get_object_or_404(User, username=self.request.user.username)
@@ -178,3 +179,25 @@ def user_home(request):
     else:
         q = "You are worthy of happiness and peace of mind."
     return render(request, 'journalbuddy/user_home.html', {'username': request.user.username, 'todayexists' :todayexists, "quote": q})
+
+@login_required
+def edit_entry(request, entry_id):
+    entry = get_object_or_404(Journal, id=entry_id, author=request.user)
+    if request.method == 'POST':
+        form = JournalForm(request.POST, instance=entry)
+        if form.is_valid():
+            form.save()
+            # Redirect to a success page
+            return redirect('/list')
+    else:
+        form = JournalForm(instance=entry)
+
+    # Determine which star should be checked
+    current_rating = form['rate'].value() or 0
+    checked_star = int(current_rating)
+
+    context = {
+        'form': form,
+        'checked_star': checked_star,
+    }
+    return render(request, 'journalbuddy/edit_entry.html', context)

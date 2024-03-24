@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 {% include 'journalbuddy/navbar.html' %}
 {% load static %}
+
 <html lang="en">
   <head>
     <!-- Include BootStrap -->
@@ -28,11 +29,23 @@
      <h1>
       My Entries
      </h1>
-         
-       
-        <div class = "container">
-        {% for entry in entries reversed %}
 
+
+        <div class="container">
+        {% for entry in entries reversed %}
+                        <a href="{% url 'journalbuddy:edit_entry' entry.id %}" class="btn btn-primary" hidden = true id = "edit">Edit</a>
+
+
+
+            <div class="card">
+                <div class="card-body">
+                    <p class="card-text">{{ entry.date }}</p>
+                    <h4 class="card-title"><a href="/journal/{{request.user}}/{{entry.id}}">Journal #{{ forloop.counter }}</a></h4>
+                    <p class="card-text">Rate: {{ entry.rate }}/5</p>
+                </div>
+            </div>
+        {% empty %}
+            <p>No journal entries found.</p>
         <div class="card">
             <div class="card-body">
               <p class="card-text">Journal # {{ entry.iteration }}</p>
@@ -45,7 +58,16 @@
       {% if todayexists == False %}
         <script>
             document.getElementById('journal').hidden = false;//unhides journal on nav bar
+
         </script>
+
+    {% endif %}
+  {% if todayexists == True %}
+        <script>
+            document.getElementById('edit').hidden = false;//unhides journal on nav bar
+
+        </script>
+
     {% endif %}
 
 
