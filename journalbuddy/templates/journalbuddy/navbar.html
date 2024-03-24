@@ -23,13 +23,12 @@
       <a class="nav-link" href="/user_home">Home</a>
       <a class="nav-link" href="/list">My Journals</a>
       <a class="nav-link" href="/journalform">Write Entry</a>
-      <a class="nav-link" href="#">Pick Me Up</a>
+      <a class="nav-link" href="{% url 'journalbuddy:pick_me_up' %}">
       <a class="nav-link" href="{% url 'journalbuddy:logout' %}">Log Out</a>
     </div>
   </div>
 </nav>
 
-<!-- Remaining part of your HTML -->
 
 <!-- Include Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
