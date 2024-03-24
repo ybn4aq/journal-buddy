@@ -12,9 +12,9 @@
 <div class = "container">
 <form action="{% url 'journalbuddy:journalform' %}" method="POST" class="form-sizer">
   {% csrf_token %}
-  
+
   <label for="rate">Rating:</label>
-  
+
   <input type="radio" id="star1" name="rate" value="1">
 <label for="star1" class="star">&#9733;</label>
 
@@ -35,7 +35,7 @@
 
   <input type="text" class="input-field" id="content" name="content" placeholder="What's going on?"><br>
   <input type="submit" value="Submit" class="btn btn-info" >
-</form> 
+</form>
 
 
 </div>

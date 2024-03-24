@@ -48,6 +48,7 @@ class JournalList(generic.ListView):
             user = get_object_or_404(User, username=self.request.user.username)
             context = super().get_context_data(**kwargs)
             context["entries"] = Journal.objects.filter(author = user)
+            context['today'] = datetime.date.today()
             return context
         except:
             redirect('') #go to login page but that's not done yet
@@ -146,3 +147,25 @@ def user_home(request):
         todayexists = False
     print(todayexists)
     return render(request, 'journalbuddy/user_home.html', {'username': request.user.username, 'todayexists' :todayexists})
+
+@login_required
+def edit_entry(request, entry_id):
+    entry = get_object_or_404(Journal, id=entry_id, author=request.user)
+    if request.method == 'POST':
+        form = JournalForm(request.POST, instance=entry)
+        if form.is_valid():
+            form.save()
+            # Redirect to a success page
+            return redirect('/list')
+    else:
+        form = JournalForm(instance=entry)
+
+    # Determine which star should be checked
+    current_rating = form['rate'].value() or 0
+    checked_star = int(current_rating)
+
+    context = {
+        'form': form,
+        'checked_star': checked_star,
+    }
+    return render(request, 'journalbuddy/edit_entry.html', context)
