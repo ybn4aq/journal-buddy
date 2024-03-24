@@ -8,7 +8,7 @@ from .forms import JournalForm
 from django.views import generic
 from .models import Journal
 from django.utils.safestring import mark_safe
-from datetime import datetime
+import datetime
 from django.contrib.auth import authenticate, login, logout
 from .forms import LoginForm, SignupForm
 from django.contrib.auth.decorators import login_required
@@ -69,7 +69,8 @@ class JournalList(generic.ListView):
                 random_item = random.choice(good_journals)
                 return render('pickmeup.html',{'good_journal':random_item})
             else: #user has no good things
-                #don't know what to do yet     
+                #don't know what to do yet
+                # Maybe something like we're sorry you're having a bad day (lol)
                 print("test")
         except:
             raise Http404("Getting good journals didn't work")
@@ -133,4 +134,15 @@ def user_signup(request):
   
 @login_required
 def user_home(request):
-    return render(request, 'journalbuddy/user_home.html', {'username': request.user.username})
+    user = get_object_or_404(User, username=request.user.username)
+    todayexists = False #checking to see if there's an entry for today
+    try:
+        journal_entry = Journal.objects.filter(author=user, date = datetime.date.today())
+        if len(journal_entry) > 0:
+            todayexists = True
+        else :
+            todayexists = False
+    except Journal.DoesNotExist:
+        todayexists = False
+    print(todayexists)
+    return render(request, 'journalbuddy/user_home.html', {'username': request.user.username, 'todayexists' :todayexists})

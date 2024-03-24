@@ -10,12 +10,22 @@
           crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .header-container {
+            position: relative;
+        }
+        .logout-button {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    </style>
 </head>
 <body>
-    <div class="container text-center mt-5">
-        <!-- Title Header with Bottom Border -->
-        <div class="mb-5 pb-3 border-bottom">
+    <div class="container mt-5">
+        <div class="header-container text-center mb-5 pb-3 border-bottom">
             <h1>Journal Buddy</h1>
+            <a href="{% url 'journalbuddy:logout' %}" class="btn btn-danger logout-button">Log Out</a>
         </div>
 
         <!-- Personalized Greeting -->
@@ -51,10 +61,10 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4 mb-4">
+    <div class="col-md-4 mb-4" hidden = true id="todayJournal">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Journal</h4>
+                <h4 class="card-title" >Journal</h4>
                 <p class="card-text">Create a new journal for today.</p>
                 <a href="/journalform" class="btn btn-primary">Create</a>
             </div>
@@ -70,6 +80,11 @@
         </div>
     </div>
 </div>
+    {% if todayexists == False %}
+        <script>
+            document.getElementById('todayJournal').hidden = false;//unhides today's journal card
+        </script>
+    {% endif %}
 
 
     <!-- Include Bootstrap JS -->
