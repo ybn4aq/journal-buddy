@@ -89,7 +89,7 @@ DATABASES = {
         "HOST": "ec2-52-54-200-216.compute-1.amazonaws.com",
         "PORT": "5432",
         "PASSWORD": "3e68efe1eaf8e3329c3977a458d4d9f29aa73ef9b8d962c5cc7b653c82733399",
-        "URI": "postgres://zwutrztzqanbjc:3e68efe1eaf8e3329c3977a458d4d9f29aa73ef9b8d962c5cc7b653c82733399@ec2-52-54-200-216.compute-1.amazonaws.com:5432/d1m413ssoam1vt",
+        "URI": "postgres://qzxpamhukebrsm:1a20504f06f107c3090b23426dcc79ff9ea558aa4eaeb2936ce8825fba315b05@ec2-3-230-24-12.compute-1.amazonaws.com:5432/defgloaou24sef",
     }
 }
 
