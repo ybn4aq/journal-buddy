@@ -136,9 +136,11 @@ def user_home(request):
     user = get_object_or_404(User, username=request.user.username)
     todayexists = False #checking to see if there's an entry for today
     try:
-        journal_entry = Journal.objects.get(author=user, date = datetime.date.today())
-        print(journal_entry.date)
-        todayexists = True
+        journal_entry = Journal.objects.filter(author=user, date = datetime.date.today())
+        if len(journal_entry) > 0:
+            todayexists = True
+        else :
+            todayexists = False
     except Journal.DoesNotExist:
         todayexists = False
     print(todayexists)
