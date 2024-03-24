@@ -13,6 +13,7 @@ class JournalForm(forms.ModelForm):
 class SignupForm(UserCreationForm):
     class Meta:
         model = User
+        
         fields = ["username", "password1", "password2"]
 
 
