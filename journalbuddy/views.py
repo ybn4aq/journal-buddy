@@ -11,6 +11,7 @@ from .utils import Calendar
 from django.utils.safestring import mark_safe
 from datetime import datetime
 from django.contrib.auth import authenticate, login, logout
+from forms import LoginForm, SignupForm
 
 # Create your views here.
 def journal(request):
