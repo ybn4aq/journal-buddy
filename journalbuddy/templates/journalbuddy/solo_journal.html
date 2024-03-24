@@ -26,10 +26,10 @@
 </head>
 <body>
 <!-- Journal Header -->
-<div class="container">
 
 
-<div class="container text-center" id="journal_header">
+
+<div class=" text-center" id="journal_header">
     <div class="row">
         
         <div class="col" id="journal_no">
@@ -44,6 +44,9 @@
     </div>
 </div>
 <!-- Journal Entry -->
+<div class="container">
+
+
 <div class="" id="journal_entry">
     <h1 id="entry_title"> Title: {{ journal_entry.content|truncatewords:5 }} </h1>
     <p id="journal_text"> {{ journal_entry.content }} </p>
