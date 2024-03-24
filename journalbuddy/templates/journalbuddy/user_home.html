@@ -33,10 +33,10 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4 mb-4">
+    <div class="col-md-4 mb-4" hidden = true id="todayJournal">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Journal</h4>
+                <h4 class="card-title" >Journal</h4>
                 <p class="card-text">Create a new journal for today.</p>
                 <a href="/journalform" class="btn btn-primary">Create</a>
             </div>
@@ -52,6 +52,11 @@
         </div>
     </div>
 </div>
+                {% if todayexists == False %}
+                    <script>
+                        document.getElementById('todayJournal').hidden = false;//unhides today's journal card
+                    </script>
+                {% endif %}
 
 
     <!-- Include Bootstrap JS -->

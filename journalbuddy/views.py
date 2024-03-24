@@ -8,7 +8,7 @@ from .forms import JournalForm
 from django.views import generic
 from .models import Journal
 from django.utils.safestring import mark_safe
-from datetime import datetime
+import datetime
 from django.contrib.auth import authenticate, login, logout
 from .forms import LoginForm, SignupForm
 from django.contrib.auth.decorators import login_required
@@ -133,4 +133,13 @@ def user_signup(request):
   
 @login_required
 def user_home(request):
-    return render(request, 'journalbuddy/user_home.html', {'username': request.user.username})
+    user = get_object_or_404(User, username=request.user.username)
+    todayexists = False #checking to see if there's an entry for today
+    try:
+        journal_entry = Journal.objects.get(author=user, date = datetime.date.today())
+        print(journal_entry.date)
+        todayexists = True
+    except Journal.DoesNotExist:
+        todayexists = False
+    print(todayexists)
+    return render(request, 'journalbuddy/user_home.html', {'username': request.user.username, 'todayexists' :todayexists})
