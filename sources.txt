@@ -1,2 +1,3 @@
 Login / Signup: https://medium.com/@devsumitg/django-auth-user-signup-and-login-7b424dae7fab
 API quotes: https://docs.zenquotes.io/zenquotes-documentation/#call-quotes
+Star rating: https://stackoverflow.com/questions/77517679/how-to-make-5-star-rating-with-css
