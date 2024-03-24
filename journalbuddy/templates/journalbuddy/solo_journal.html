@@ -26,22 +26,26 @@
 </head>
 <body>
 <!-- Journal Header -->
+<div class="container">
+
+
 <div class="container text-center" id="journal_header">
     <div class="row">
-        <div class="col" id="date">
-            {{ journal_entry.date|date:"m/d" }}
-        </div>
+        
         <div class="col" id="journal_no">
             Journal #{{ journal_entry.iteration }}
         </div>
+        <h3 class="col" id="date">
+            {{ journal_entry.date }}
+        </h3>
         <div class="col" id="rating">
-            {{ journal_entry.rate }}/5
+            Rate: {{ journal_entry.rate }}/5
         </div>
     </div>
 </div>
 <!-- Journal Entry -->
 <div class="" id="journal_entry">
-    <h1 id="entry_title"> {{ journal_entry.content|truncatewords:5 }} </h1>
+    <h1 id="entry_title"> Title: {{ journal_entry.content|truncatewords:5 }} </h1>
     <p id="journal_text"> {{ journal_entry.content }} </p>
     <div>
         <ul id="good_things">
@@ -57,7 +61,7 @@
     </div>
     {% endif %}
 </div>
-
+</div>
 <!-- Include Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
