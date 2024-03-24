@@ -50,9 +50,17 @@ class JournalList(generic.ListView):
             user = get_object_or_404(User, username=self.request.user.username)
             context = super().get_context_data(**kwargs)
             context["entries"] = Journal.objects.filter(author = user)
+            todayexists = False #checking to see if there's an entry for today
+            journal_entry = Journal.objects.filter(author=user, date = datetime.date.today())
+            if len(journal_entry) > 0:
+                todayexists = True
+            else :
+                todayexists = False
+
+            context["todayexists"] = todayexists
             return context
         except:
-            redirect('') #go to login page but that's not done yet
+            return redirect("login") #go to login page 
 
     def journal_for_user_and_day(request, username, journal_id):
         user = get_object_or_404(User, username=username)
@@ -76,6 +84,7 @@ class JournalList(generic.ListView):
                 print("test")
         except:
             raise Http404("Getting good journals didn't work")
+        
 
 
 
