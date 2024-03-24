@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.urls import reverse
 from django.contrib import messages
 from .models import Journal
@@ -10,6 +10,8 @@ from .models import Journal
 from .utils import Calendar
 from django.utils.safestring import mark_safe
 from datetime import datetime
+from django.contrib.auth import authenticate, login, logout
+from .forms import LoginForm, SignupForm
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -18,6 +20,12 @@ def journal(request):
     if request.method == 'POST':
         form = JournalForm(request.POST)
         if form.is_valid():
+            journal_instance = form.save(commit=False)
+            journal_instance.date = form.cleaned_data["date"]
+            journal_instance.content = form.cleaned_data["content"]
+            journal_instance.rate = form.cleaned_data["rate"]
+            journal_instance.save()
+            return HttpResponseRedirect(reverse("journalbuddy"))
             cont = form.cleaned_data["content"]
             rating = form.cleaned_data["rate"]
             report = Journal.objects.create(content=cont, rate=rating)
@@ -88,3 +96,47 @@ class CalendarView(generic.ListView):
             year, month = (int(x) for x in day.split('-'))
             return datetime.date(year, month, day=1)
         return datetime.today()
+    
+
+class HomeView(generic.TemplateView):
+    template_name = "../templates/index.html"
+
+def user_login(request):
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password"]
+            user = authenticate(request, username=username, password=password)
+            if user:
+                login(request, user)
+                return redirect("/")
+            else:
+                # Invalid username or password
+                return HttpResponse("Invalid username or password. Please try again.")
+        else:
+            return HttpResponse("Form is not valid. Please check your input.")
+    else:
+        form = LoginForm()
+        return render(request, 'login.html', {'form': form})
+        
+
+def user_logout(request):
+    logout(request)
+    return redirect("journalbuddy:login")
+
+def user_signup(request):
+    if request.method == "POST":
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("journalbuddy:login")
+        else:
+            return HttpResponse("Form is not valid. Please check your input.")
+    else:
+        form = SignupForm()
+    return render(request, "signup.html", {"form": form})
+  
+@login_required
+def user_home(request):
+    return render(request, 'journalbuddy/user_home.html', {'username': request.user.username})
