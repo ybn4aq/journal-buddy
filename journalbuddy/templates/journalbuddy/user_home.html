@@ -22,6 +22,24 @@
         <h4 class="mt-4 mb-5">Hi, {{ username }}, I'm your journal buddy! From here, you can view past journals,
         create a new one for today, or receive a special 'pick me up' if you're having a rough day.</h4>
 
+        <script type="text/javascript">
+
+            const api_url ="https://zenquotes.io/api/random";
+            
+            async function getapi(url)
+            {
+              const response = await fetch(url);
+              var data = await response.json();
+              console.log(data);
+            }
+            
+            apidata = getapi(api_url);
+            obj = apidata;
+            console.log(obj)
+            document.write(obj);
+            
+        </script>
+        
         <!-- Boxes/Sections with Increased Top Margin -->
 <div class="row justify-content-center mt-10"> <!-- Increased top margin with mt-5 -->
     <div class="col-md-4 mb-4">
