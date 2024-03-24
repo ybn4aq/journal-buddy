@@ -33,7 +33,6 @@
         <div class = "container">
         {% for entry in entries %}
 
-        
         <div class="card">
             <div class="card-body">
               <p class="card-text">Journal # {{ forloop.counter }}</p>
@@ -43,7 +42,11 @@
         </div>
         {% endfor %}
       </div>
-
+      {% if todayexists == False %}
+        <script>
+            document.getElementById('journal').hidden = false;//unhides journal on nav bar
+        </script>
+    {% endif %}
 
 
   </body>

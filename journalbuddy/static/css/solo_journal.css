@@ -6,10 +6,19 @@
     margin-left: 25px;
 }
 
-#good_thing li {
-    
-}
+
 
 #journal_image img {
     width: 40%;
 }
+
+.footer {
+    position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+    padding: 20px 0;
+    background-color: #74bd90; /* Dark gray footer */
+    color: #ffffff; /* White text */
+    text-align: center;
+  }

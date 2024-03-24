@@ -13,6 +13,8 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import LoginForm, SignupForm
 from django.contrib.auth.decorators import login_required
 import random
+import requests
+import json
 
 # Create your views here.
 
@@ -48,9 +50,17 @@ class JournalList(generic.ListView):
             user = get_object_or_404(User, username=self.request.user.username)
             context = super().get_context_data(**kwargs)
             context["entries"] = Journal.objects.filter(author = user)
+            todayexists = False #checking to see if there's an entry for today
+            journal_entry = Journal.objects.filter(author=user, date = datetime.date.today())
+            if len(journal_entry) > 0:
+                todayexists = True
+            else :
+                todayexists = False
+
+            context["todayexists"] = todayexists
             return context
         except:
-            redirect('') #go to login page but that's not done yet
+            return redirect("login") #go to login page 
 
     def journal_for_user_and_day(request, username, journal_id):
         user = get_object_or_404(User, username=username)
@@ -147,5 +157,14 @@ def user_home(request):
             todayexists = False
     except Journal.DoesNotExist:
         todayexists = False
-    print(todayexists)
-    return render(request, 'journalbuddy/user_home.html', {'username': request.user.username, 'todayexists' :todayexists})
+
+# api call for random quote
+
+    url = "https://zenquotes.io/api/random"
+    response = requests.request("GET", url)
+    if (response.status_code == 200):
+        json_data = response.json()
+        q = json_data[0]["q"]
+    else:
+        q = "You are worthy of happiness and peace of mind."
+    return render(request, 'journalbuddy/user_home.html', {'username': request.user.username, 'todayexists' :todayexists, "quote": q})
