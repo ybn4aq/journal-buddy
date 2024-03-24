@@ -13,6 +13,8 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import LoginForm, SignupForm
 from django.contrib.auth.decorators import login_required
 import random
+import requests
+import json
 
 # Create your views here.
 
@@ -144,5 +146,14 @@ def user_home(request):
             todayexists = False
     except Journal.DoesNotExist:
         todayexists = False
-    print(todayexists)
-    return render(request, 'journalbuddy/user_home.html', {'username': request.user.username, 'todayexists' :todayexists})
+
+# api call for random quote
+
+    url = "https://zenquotes.io/api/random"
+    response = requests.request("GET", url)
+    if (response.status_code == 200):
+        json_data = response.json()
+        q = json_data[0]["q"]
+    else:
+        q = "You are worthy of happiness and peace of mind."
+    return render(request, 'journalbuddy/user_home.html', {'username': request.user.username, 'todayexists' :todayexists, "quote": q})
