@@ -1,0 +1,61 @@
+.container{
+    display:flex;
+    width: 50%; 
+    height: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    justify-content: center; /* Center items horizontally */
+    align-items: center;
+}
+.form-sizer{
+    width: 100%;
+    justify-content: center; 
+    align-items: center;
+}
+h1{
+    text-align: center
+}
+.input-field {
+    width: 100%;
+    height: 80%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    vertical-align: top;
+    align-items: start;
+    margin-top: 0px;
+  }
+  .input-field::placeholder {
+    vertical-align: top;
+    padding-top: 10px;
+  }
+
+  input[type="radio"] {
+    display: none;
+  }
+  
+  .star {
+    font-size: 30px; /* Adjust the size as needed */
+    color: #f8d100; /* Empty star color */
+    cursor: pointer;
+  }
+  
+    
+  input[type="radio"]:checked ~ input[type="radio"] ~ .star,
+  input[type="radio"]:checked + input[type="radio"] + .star {
+  color: #aaa; /* Filled star color for stars after the checked one */
+  }
+
+  input[type="text"] {
+    padding-top: 10px; /* Adjust as needed to vertically center the text */
+    
+  }
+  input[type="submit"] {
+    padding-top: 10px; /* Adjust as needed to vertically center the text */
+    
+    padding-bottom: 10px;
+  }
+  
