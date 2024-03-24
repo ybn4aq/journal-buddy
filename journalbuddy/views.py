@@ -14,17 +14,12 @@ from .forms import LoginForm, SignupForm
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+
 @login_required
 def journal(request):
     if request.method == 'POST':
         form = JournalForm(request.POST)
         if form.is_valid():
-            journal_instance = form.save(commit=False)
-            journal_instance.date = form.cleaned_data["date"]
-            journal_instance.content = form.cleaned_data["content"]
-            journal_instance.rate = form.cleaned_data["rate"]
-            journal_instance.save()
-            return HttpResponseRedirect(reverse("journalbuddy"))
             cont = form.cleaned_data["content"]
             rating = form.cleaned_data["rate"]
             report = Journal.objects.create(content=cont, rate=rating)
