@@ -10,7 +10,7 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+
     <link rel="stylesheet" href="../../static/css/list.css" />
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -25,47 +25,30 @@
   </head>
 
   <body>
-    <div>
      <h1>
       My Entries
      </h1>
-     <div class = "container">
          
+       
+        <div class = "container">
+        {% for entry in entries %}
+
         
-        <table class="table table-bordered table-striped table-hover table-sm">
-          <thead>
-              <tr>
-              <th scope="col">Date</th>
-              <th scope="col">Journal</th>
-              <th scope="col">Rate</th>
-              </tr>
-          </thead>
-          <tbody>
+        <div class="card">
+            <div class="card-body">
+              <p class="card-text">{{ entry.date }}</p>
+                <h4 class="card-title"><a href="/journal/{{request.user}}/{{entry.id}}">Journal #{{ forloop.counter }}</a></h4>
+                <p class="card-text">rate: {{ entry.rate }}/5</p>
+            </div>
+        </div>
+        {% endfor %}
+      </div>
 
-                  
-                  {% for entry in entries %}
-                  <tr>
-                      <td>
-                          {{ entry.date }}
-                      </td>
-                      <td>
-                        <a href="/journal/{{request.user}}/{{entry.id}}">Journal #{{ entry.id }}</a>
-                        Journal #{{ entry.iteration }}
-                    </td>
-                    <td>
-                      {{ entry.rate }}
-                  </td>
-                      
-                      </tr>
-                  {% endfor %}
-          
-          </tbody>
-      </table>
-     </div>
-    </div>
 
-    <!-- Include Bootstrap JS -->
-    <script
+
+  </body>
+      <!-- Include Bootstrap JS -->
+      <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
       integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
       crossorigin="anonymous"
@@ -75,5 +58,4 @@
       integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
       crossorigin="anonymous"
     ></script>
-  </body>
 </html>
