@@ -34,12 +34,12 @@
         {% for entry in entries %}
 
         <div class="card">
-          <div class="card-body">
-            <p class="card-text">{{ entry.date }}</p>
-              <h4 class="card-title"><a href="/journal/{{request.user}}/{{entry.id}}">Journal #{{ forloop.counter }}</a></h4>
-              <p class="card-text">rate: {{ entry.rate }}/5</p>
-          </div>
-      </div>
+            <div class="card-body">
+              <p class="card-text">Journal # {{ forloop.counter }}</p>
+                <h4 class="card-title"><a href="/journal/{{request.user}}/{{entry.id}}">{{ entry.date }}</a></h4>
+                <p class="card-text">Rating: {{ entry.rate }}/5</p>
+            </div>
+        </div>
         {% endfor %}
       </div>
       {% if todayexists == False %}
