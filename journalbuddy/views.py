@@ -107,7 +107,7 @@ def user_login(request):
             user = authenticate(request, username=username, password=password)
             if user:
                 login(request, user)
-                return redirect("/")
+                return redirect("/user_home/")
             else:
                 # Invalid username or password
                 return HttpResponse("Invalid username or password. Please try again.")
