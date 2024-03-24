@@ -15,6 +15,7 @@ class UserProfile(models.Model):
     )  # user.profile
     hobbies = models.TextField(blank=True, null=True)
 
+
     def __str__(self):
         return self.user.username
 
@@ -30,6 +31,7 @@ class UserProfile(models.Model):
 
 
 class Journal(models.Model):
+    id = models.AutoField(primary_key=True)
     date = models.DateField(default=datetime.date.today())
     content = models.CharField(max_length=1000)
     rate = models.IntegerField(validators=[MaxValueValidator(5), MinValueValidator(1)])

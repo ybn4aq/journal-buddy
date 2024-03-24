@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-{% include 'journalbuddy/navbar.html' %}
 {% load static %}
 <html lang="en">
   <head>
@@ -11,7 +10,6 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
-    <link rel="stylesheet" href="../../static/css/list.css" />
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -21,49 +19,37 @@
     />
     <meta name="description" content="Journal Buddy" />
     <meta name="keywords" content="mental health, journaling" />
-    <title>View Journal</title>
+    <title>Journal Buddy</title>
   </head>
-
   <body>
-    <div>
-     <h1>
-      My Entries
-     </h1>
-     <div class = "container">
-         
-        
-        <table class="table table-bordered table-striped table-hover table-sm">
-          <thead>
-              <tr>
-              <th scope="col">Date</th>
-              <th scope="col">Journal</th>
-              <th scope="col">Rate</th>
-              </tr>
-          </thead>
-          <tbody>
-
-                  
-                  {% for entry in entries %}
-                  <tr>
-                      <td>
-                          {{ entry.date }}
-                      </td>
-                      <td>
-                        <a href="/journal/{{request.user}}/{{entry.id}}">Journal #{{ entry.id }}</a>
-                        Journal #{{ entry.iteration }}
-                    </td>
-                    <td>
-                      {{ entry.rate }}
-                  </td>
-                      
-                      </tr>
-                  {% endfor %}
-          
-          </tbody>
-      </table>
-     </div>
+    <h1>Welcome to Journal Buddy</h1>
+    <div class="description">
+      <p>
+        Journal Buddy is a daily journaling website that promotes better
+        wellness. Having a good day? Journal about it! Describe your day in
+        detail, or just go over the highlights. Have a picture? Throw that in,
+        too! If you're having a rough day, we'll remind you of your past good
+        days and what you enjoy doing.
+      </p>
     </div>
-
+    <div class="sign-in-up">
+      <p>
+        What are you waiting for? Start your journey towards a better mental
+        health today!
+      </p>
+    </div>
+    <a class="btn btn-primary btn-lg" href="{% url 'journalbuddy:login' %}">
+      Sign In
+    </a>
+    <a class="btn btn-primary btn-lg" href="{% url 'journalbuddy:signup' %}">
+      Sign Up
+    </a>
+    <div class="footer">
+      <p>
+        Created by Helen Yao, Larissa Cybyk, Neal Langhorne, and Thomas Arnold
+        for the HooHacks 2024 competition.
+      </p>
+    </div>
     <!-- Include Bootstrap JS -->
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
