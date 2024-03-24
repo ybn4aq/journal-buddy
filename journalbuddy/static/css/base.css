@@ -78,10 +78,11 @@
     left: 0;
     z-index: 10;
     width: 100%;
-    padding: 20px 0;
-    background-color: #74bd90; /* Dark gray footer */
+    padding: 10px;
+    background-color: #F8F9FA; /* Dark gray footer */
     color: #ffffff; /* White text */
     text-align: center;
+    color:#343a40;
   }
   
   /* Table styles */
