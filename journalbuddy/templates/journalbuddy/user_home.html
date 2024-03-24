@@ -10,12 +10,22 @@
           crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .header-container {
+            position: relative;
+        }
+        .logout-button {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    </style>
 </head>
 <body>
-    <div class="container text-center mt-5">
-        <!-- Title Header with Bottom Border -->
-        <div class="mb-5 pb-3 border-bottom">
+    <div class="container mt-5">
+        <div class="header-container text-center mb-5 pb-3 border-bottom">
             <h1>Journal Buddy</h1>
+            <a href="{% url 'journalbuddy:logout' %}" class="btn btn-danger logout-button">Log Out</a>
         </div>
 
         <!-- Personalized Greeting -->
