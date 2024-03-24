@@ -20,6 +20,15 @@ import json
 
 @login_required
 def journal(request):
+    user = get_object_or_404(User, username=request.user.username)
+    num_of_entries = 0
+    try:
+        entries = Journal.objects.filter(author=user)
+        num_of_entries = len(entries)
+        print(num_of_entries)
+    except:
+        num_of_entries = 0
+    print(num_of_entries)
     if request.method == 'POST':
         form = JournalForm(request.POST)
         if form.is_valid():
@@ -27,6 +36,7 @@ def journal(request):
             rating = form.cleaned_data["rate"]
             report = Journal.objects.create(content=cont, rate=rating)
             report.author = request.user
+            report.iteration = num_of_entries+1
             report.save()
 
             return HttpResponseRedirect(reverse("journalbuddy:list"))
