@@ -84,3 +84,7 @@ class CalendarView(generic.ListView):
             year, month = (int(x) for x in day.split('-'))
             return datetime.date(year, month, day=1)
         return datetime.today()
+
+@login_required
+def user_home(request):
+    return render(request, 'journalbuddy/user_home.html', {'username': request.user.username})
