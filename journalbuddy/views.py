@@ -12,6 +12,7 @@ from datetime import datetime
 from django.contrib.auth import authenticate, login, logout
 from .forms import LoginForm, SignupForm
 from django.contrib.auth.decorators import login_required
+import random
 
 # Create your views here.
 @login_required
@@ -64,6 +65,20 @@ class JournalList(generic.ListView):
             raise Http404("No Journal entry found for this date.")
 
         return render(request, 'journalbuddy/solo_journal.html', {'journal_entry': journal_entry})
+    
+    def pick_me_up(request):
+        user = get_object_or_404(User, username=request.user.username)
+        try:
+            good_journals = Journal.objects.get(author = user, rate = 4 or 5)
+            if(len(good_journals) > 0): #if there's more than 0 things in the user's "good" journals
+                random_item = random.choice(good_journals)
+                return render('pickmeup.html',{'good_journal':random_item})
+            else: #user has no good things
+                #don't know what to do yet     
+                print("test")
+        except:
+            raise Http404("Getting good journals didn't work")
+
 
 
     
