@@ -25,7 +25,7 @@
       {% csrf_token %}
       {{ form.as_p }}
       <button type="submit"> Login </button>
-      <a href="{% url 'signup' %}"> Create account</a>
+      <a href="{% url 'journalbuddy:signup' %}"> Create account</a>
     </form>
   </body>
 </html>

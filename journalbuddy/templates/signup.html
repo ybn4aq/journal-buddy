@@ -24,8 +24,8 @@
     <form method="POST">
       {% csrf_token %}
       {{ form.as_p }}
-      <button type="submit"> Login </button>
-      <a href="{% url 'login' %}"> Already have account? </a>
+      <button type="submit"> Sign Up </button>
+      <a href="{% url 'journalbuddy:login' %}"> Already have account? </a>
     </form>
   </body>
 </html>

@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.urls import reverse
 from django.contrib import messages
 from .models import Journal
@@ -78,26 +78,38 @@ class HomeView(generic.TemplateView):
     template_name = "../templates/index.html"
 
 def user_login(request):
-    form = LoginForm(request.POST)
     if request.method == "POST":
-        username = form.cleaned_data["username"]
-        password = form.cleaned_data["password"]
-        user = authenticate(request, username=username, password=password)
-        if user:
-            login(request, user)
-            return redirect("/")  # TODO: make this user home page
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password"]
+            user = authenticate(request, username=username, password=password)
+            if user:
+                login(request, user)
+                return redirect("/")
+            else:
+                # Invalid username or password
+                return HttpResponse("Invalid username or password. Please try again.")
+        else:
+            return HttpResponse("Form is not valid. Please check your input.")
+    else:
+        form = LoginForm()
+        return render(request, 'login.html', {'form': form})
+        
 
 def user_logout(request):
     logout(request)
-    return redirect("login")
+    return redirect("journalbuddy:login")
 
 def user_signup(request):
     if request.method == "POST":
         form = SignupForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("login")
+            return redirect("journalbuddy:login")
         else:
-            form = SignupForm()
-        return render(request, "signup.html", {"form": form})
+            return HttpResponse("Form is not valid. Please check your input.")
+    else:
+        form = SignupForm()
+    return render(request, "signup.html", {"form": form})
     
