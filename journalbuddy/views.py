@@ -74,6 +74,22 @@ class JournalList(generic.ListView):
                 print("test")
         except:
             raise Http404("Getting good journals didn't work")
+        
+class PickMeUp(generic.DetailView):
+    model = Journal
+    template_name = "pick_me_up.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = get_object_or_404(User, username=self.request.user.username)
+        try:
+            good_journals = Journal.objets.get(author = user, rate = 4 or 5)
+            if(len(good_journals) > 0): #if there's more than 0 things in the user's "good" journals
+                random_item = random.choice(good_journals)
+                context["random_item"] = random_item
+        except:
+            print("test")
+        return context
 
 
 
