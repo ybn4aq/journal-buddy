@@ -19,6 +19,9 @@
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+
+  
   <a class="navbar-brand" href="home">Journal Buddy</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -26,24 +29,26 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item active">
-        <a class="nav-link" href="/user_home">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="/user_home">Home</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/list">My Journals</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="Write Entry" hidden = {{todaysEntry}}>Journal</a>
+        <a class="nav-link" href="/journalform" hidden = true id = "journal">Journal</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="pick_me_up">Motivation</a>
+        <a class="nav-link" href="/cheerup">Motivation</a>
       </li>
     </ul>
-    <ul class="nav navbar-nav navbar-right">
-      <li class="nav-item">
-          <a   class="nav-link" href="{% url 'logout' %}">Logout</a>
-      </li>
-  </ul>
   </div>
+   
+  </div>
+  <ul class="nav navbar-nav navbar-right">
+    <li class="nav-item">
+        <a   class="nav-link" href="logout">Logout</a>
+    </li>
+</ul>
 </nav>
 
 <!-- Remaining part of your HTML -->
