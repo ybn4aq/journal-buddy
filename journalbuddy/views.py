@@ -12,11 +12,13 @@ from django.utils.safestring import mark_safe
 from datetime import datetime
 from django.contrib.auth import authenticate, login, logout
 from .forms import LoginForm, SignupForm
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required
 def journal(request):
     if request.method == 'POST':
-        form = JournalForm(request.POST, request.FILES)
+        form = JournalForm(request.POST)
         if form.is_valid():
             journal_instance = form.save(commit=False)
             journal_instance.date = form.cleaned_data["date"]
@@ -24,6 +26,13 @@ def journal(request):
             journal_instance.rate = form.cleaned_data["rate"]
             journal_instance.save()
             return HttpResponseRedirect(reverse("journalbuddy"))
+            cont = form.cleaned_data["content"]
+            rating = form.cleaned_data["rate"]
+            report = Journal.objects.create(content=cont, rate=rating)
+            report.author = request.user
+            report.save()
+
+            return HttpResponseRedirect(reverse("journalbuddy:list"))
     else:
         form = JournalForm()
 
@@ -40,19 +49,31 @@ class JournalList(generic.ListView):
         return entries
     
     def get_context_data(self, **kwargs):
+        user = get_object_or_404(User, username=self.request.user.username)
         context = super().get_context_data(**kwargs)
-        context["entries"] = Journal.objects.all()
+        context["entries"] = Journal.objects.filter(author = user)
         return context
 
-    def journal_for_user_and_day(request, username, year, month, day):
+    def journal_for_user_and_day(request, username, journal_id):
         user = get_object_or_404(User, username=username)
         try:
-            journal_entry = Journal.objects.get(author=user, date__year=year, date__month=month, date__day=day)
+            journal_entry = Journal.objects.get(author=user, id = journal_id)
         except Journal.DoesNotExist:
             raise Http404("No Journal entry found for this date.")
 
         return render(request, 'journalbuddy/solo_journal.html', {'journal_entry': journal_entry})
+
+
     
+    # def see_journal(request, journal_id):
+    #     if request.user.is_authenticated:
+    #         return render(request, "journalList.html", {"journal_id":journal_id})
+    #     else:
+    #         return redirect('')
+    
+# def journal_detail(request, id):
+#     journal_entry = get_object_or_404(Journal, id=id)
+#     return render(request, 'journalbuddy/solo_journal.html', {'journal_entry': journal_entry})
 
 class CalendarView(generic.ListView):
     model = Journal
@@ -112,4 +133,7 @@ def user_signup(request):
     else:
         form = SignupForm()
     return render(request, "signup.html", {"form": form})
-    
+  
+@login_required
+def user_home(request):
+    return render(request, 'journalbuddy/user_home.html', {'username': request.user.username})

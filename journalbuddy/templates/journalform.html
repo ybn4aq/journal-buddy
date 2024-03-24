@@ -1,12 +1,29 @@
+{% include 'journalbuddy/navbar.html' %}
 <html>
+<head>
+  <script>
+      
+  </script>
+</head>
 <body>
 
 <h2>Journal Entry</h2>
 
-<form action="{% url 'app:report' %}">
-  <input type="text" id="content" name="content" value="What's going on?"><br>
+
+<form action="{% url 'journalbuddy:journalform' %}" method="POST">
+  {% csrf_token %}
+  <input type="text" id="content" name="content" ><br>
   <label for="rate">Rating:</label><br>
-  <input type="range" id="rate" name="rate" min="1" max="5"><br><br>
+  <input type="radio" id="star5" name="rate" value="5" />
+  <label for="star5">5 stars</label>
+  <input type="radio" id="star4" name="rate" value="4" />
+  <label for="star4">4 stars</label>
+  <input type="radio" id="star3" name="rate" value="3" />
+  <label for="star3">3 stars</label>
+  <input type="radio" id="star2" name="rate" value="2" />
+  <label for="star2">2 stars</label>
+  <input type="radio" id="star1" name="rate" value="1" />
+  <label for="star1">1 star</label>
   <input type="submit" value="Submit">
 </form> 
 
