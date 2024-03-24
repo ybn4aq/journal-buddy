@@ -27,6 +27,7 @@ h1{
     vertical-align: top;
     align-items: start;
     margin-top: 0px;
+  
   }
   .input-field::placeholder {
     vertical-align: top;
@@ -55,7 +56,7 @@ h1{
   }
   input[type="submit"] {
     padding-top: 10px; /* Adjust as needed to vertically center the text */
-    
+    align-self: center;
     padding-bottom: 10px;
   }
   
