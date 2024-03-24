@@ -110,7 +110,11 @@ def user_login(request):
                 return redirect("/user_home/")
             else:
                 # Invalid username or password
-                return HttpResponse("Invalid username or password. Please try again.")
+                return HttpResponse("""
+                                Invalid username or password. Please try again.
+                                <br>
+                                <a href="/"><button>Try Again</button></a>
+                                """, content_type="text/html")
         else:
             return HttpResponse("Form is not valid. Please check your input.")
     else:
