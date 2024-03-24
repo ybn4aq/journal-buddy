@@ -28,6 +28,7 @@
   /* Container styles */
   .container {
     margin-top: 20px;
+
   }
   
   /* Form styles */
@@ -133,3 +134,14 @@
     }
   }
   
+  .quote{
+    display:flex;
+    width: 50%; 
+    height: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    justify-content: center; /* Center items horizontally */
+    align-items: center;
+  }

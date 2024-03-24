@@ -3,8 +3,6 @@
     flex-direction: column;
     margin-top:20px;
     /* align-content: space-between; */
-    margin-left: 20px;
-    margin-right: 20px;
     align-content: center;
     align-items:center;
     width: 100%
@@ -24,11 +22,15 @@ body{
     margin:0;
     padding:0;
     width:100%;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    margin:0 auto;
 }
 
 .card-body{
     display:flex;
     flex-direction:row;
     align-content:stretch;
-    gap:35%
+    justify-content: space-between;
 }
