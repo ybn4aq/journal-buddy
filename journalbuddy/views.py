@@ -50,7 +50,7 @@ class JournalList(generic.ListView):
             context["entries"] = Journal.objects.filter(author = user)
             return context
         except:
-            redirect('') #go to login page but that's not done yet
+            return redirect("login") #go to login page 
 
     def journal_for_user_and_day(request, username, journal_id):
         user = get_object_or_404(User, username=username)
