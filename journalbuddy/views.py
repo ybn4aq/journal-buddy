@@ -41,8 +41,9 @@ class JournalList(generic.ListView):
         return entries
     
     def get_context_data(self, **kwargs):
+        user = get_object_or_404(User, username=self.request.user.username)
         context = super().get_context_data(**kwargs)
-        context["entries"] = Journal.objects.all()
+        context["entries"] = Journal.objects.filter(author = user)
         return context
 
     def journal_for_user_and_day(request, username, journal_id):
