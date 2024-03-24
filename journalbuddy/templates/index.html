@@ -31,11 +31,33 @@
       </p>
     </div>
     <div class="sign-in-up">
-        <p> What are you waiting for? Start your journey towards a better mental health today! </p>
+      <p>
+        What are you waiting for? Start your journey towards a better mental
+        health today!
+      </p>
     </div>
-    <button type="button" class="btn btn-primary btn-lg">Sign In / Sign Up</button>
+    <button type="button" class="btn btn-primary btn-lg" a href="{% url 'login' %}">
+      Sign In
+    </button>
+    <button type="button" class="btn btn-primary btn-lg" a href="{% url 'signup' %}">
+      Sign Up
+    </button>
     <div class="footer">
-        <p> Created by Helen Yao, Larissa Cybyk, Neal Langhorne, and Thomas Arnold for the HooHacks 2024 competition. </p>
+      <p>
+        Created by Helen Yao, Larissa Cybyk, Neal Langhorne, and Thomas Arnold
+        for the HooHacks 2024 competition.
+      </p>
     </div>
+    <!-- Include Bootstrap JS -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+      integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>

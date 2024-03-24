@@ -10,6 +10,7 @@ from .models import Journal
 from .utils import Calendar
 from django.utils.safestring import mark_safe
 from datetime import datetime
+from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
 def journal(request):
@@ -21,7 +22,6 @@ def journal(request):
             journal_instance.content = form.cleaned_data["content"]
             journal_instance.rate = form.cleaned_data["rate"]
             journal_instance.save()
-
             return HttpResponseRedirect(reverse("journalbuddy"))
     else:
         form = JournalForm()
@@ -75,4 +75,28 @@ class CalendarView(generic.ListView):
 
 class HomeView(generic.TemplateView):
     template_name = "../templates/index.html"
+
+def user_login(request):
+    form = LoginForm(request.POST)
+    if request.method == "POST":
+        username = form.cleaned_data["username"]
+        password = form.cleaned_data["password"]
+        user = authenticate(request, username=username, password=password)
+        if user:
+            login(request, user)
+            return redirect("/")  # TODO: make this user home page
+
+def user_logout(request):
+    logout(request)
+    return redirect("login")
+
+def user_signup(request):
+    if request.method == "POST":
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("login")
+        else:
+            form = SignupForm()
+        return render(request, "signup.html", {"form": form})
     
