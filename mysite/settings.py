@@ -13,19 +13,16 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 import sys
-from .config import Config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-c = Config()
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = c.secret
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -33,7 +30,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    'journal-buddy-jb-06547030c822.herokuapp.com',
+    "journal-buddy-jb-06547030c822.herokuapp.com",
 ]
 
 
@@ -84,7 +81,17 @@ WSGI_APPLICATION = "mysite.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = c.databases
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.environ.get("NAME"),
+        "USER": os.environ.get("USER"),
+        "HOST": "ec2-3-230-24-12.compute-1.amazonaws.com",
+        "PORT": "5432",
+        "PASSWORD": os.environ.get("PASSWORD"),
+        "URI": os.environ.get("DATABASE_URL"),
+    }
+}
 
 if "test" in sys.argv:
     DATABASES["default"] = {
@@ -138,6 +145,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 try:
     if "HEROKU" in os.environ:
         import django_heroku
+
         django_heroku.settings(locals())
 except ImportError:
     found = False
