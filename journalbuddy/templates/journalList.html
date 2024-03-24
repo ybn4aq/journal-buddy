@@ -31,11 +31,11 @@
          
        
         <div class = "container">
-        {% for entry in entries %}
+        {% for entry in entries reversed %}
 
         <div class="card">
             <div class="card-body">
-              <p class="card-text">Journal # {{ forloop.counter }}</p>
+              <p class="card-text">Journal # {{ entry.iteration }}</p>
                 <h4 class="card-title"><a href="/journal/{{request.user}}/{{entry.id}}">{{ entry.date }}</a></h4>
                 <p class="card-text">Rating: {{ entry.rate }}/5</p>
             </div>
