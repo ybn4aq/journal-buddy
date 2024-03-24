@@ -20,14 +20,26 @@
     <meta name="description" content="Journal Buddy" />
     <meta name="keywords" content="mental health, journaling" />
     <title>Sign Up</title>
+    <style>
+      #signup-main {
+        margin-left: 100px;
+        margin-top: 100px;
+      }
+      p {
+        max-width: 198px;
+      }
+
+    </style>
   </head>
   <body>
-    <h1> Sign Up </h1>
-    <form method="POST">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit"> Sign Up </button>
-      <a href="{% url 'journalbuddy:login' %}"> Already have account? </a>
-    </form>
+    <div id="signup-main">>
+      <h1> Sign Up </h1>
+      <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit"> Sign Up </button>
+        <a href="{% url 'journalbuddy:login' %}"> Already have account? </a>
+      </form>
+    </div>
   </body>
 </html>
