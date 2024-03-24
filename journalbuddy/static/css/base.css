@@ -28,6 +28,7 @@
   /* Container styles */
   .container {
     margin-top: 20px;
+
   }
   
   /* Form styles */
@@ -72,11 +73,16 @@
   
   /* Footer styles */
   .footer {
-    margin-top: 20px;
-    padding: 20px 0;
-    background-color: #343a40; /* Dark gray footer */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    width: 100%;
+    padding: 10px;
+    background-color: #F8F9FA; /* Dark gray footer */
     color: #ffffff; /* White text */
     text-align: center;
+    color:#343a40;
   }
   
   /* Table styles */
@@ -129,3 +135,14 @@
     }
   }
   
+  .quote{
+    display:flex;
+    width: 50%; 
+    height: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    justify-content: center; /* Center items horizontally */
+    align-items: center;
+  }

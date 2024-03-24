@@ -14,7 +14,7 @@ urlpatterns = [
     path('journal/<str:username>/<int:journal_id>/', views.JournalList.journal_for_user_and_day, name='journal_for_day'),
     path('journalform/', views.journal, name="journalform"),
     path('user_home/', views.user_home, name='user_home'),
-    path('cheerup/',views.JournalList.pick_me_up,name='pick_me_up'),
+    path('cheerup/',views.PickMeUp.as_view(),name='pick_me_up'),
     path('edit_entry/<int:entry_id>/', views.edit_entry, name='edit_entry'),
     # path('journal/<uuid:id>/', views.journal_detail, name='journal_detail'),  # Adjusted to use journal's id
 ]

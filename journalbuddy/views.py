@@ -13,11 +13,22 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import LoginForm, SignupForm
 from django.contrib.auth.decorators import login_required
 import random
+import requests
+import json
 
 # Create your views here.
 
 @login_required
 def journal(request):
+    user = get_object_or_404(User, username=request.user.username)
+    num_of_entries = 0
+    try:
+        entries = Journal.objects.filter(author=user)
+        num_of_entries = len(entries)
+        print(num_of_entries)
+    except:
+        num_of_entries = 0
+    print(num_of_entries)
     if request.method == 'POST':
         form = JournalForm(request.POST)
         if form.is_valid():
@@ -25,6 +36,7 @@ def journal(request):
             rating = form.cleaned_data["rate"]
             report = Journal.objects.create(content=cont, rate=rating)
             report.author = request.user
+            report.iteration = num_of_entries+1
             report.save()
 
             return HttpResponseRedirect(reverse("journalbuddy:list"))
@@ -49,9 +61,17 @@ class JournalList(generic.ListView):
             context = super().get_context_data(**kwargs)
             context["entries"] = Journal.objects.filter(author = user)
             context['today'] = datetime.date.today()
+            todayexists = False #checking to see if there's an entry for today
+            journal_entry = Journal.objects.filter(author=user, date = datetime.date.today())
+            if len(journal_entry) > 0:
+                todayexists = True
+            else :
+                todayexists = False
+
+            context["todayexists"] = todayexists
             return context
         except:
-            redirect('') #go to login page but that's not done yet
+            return redirect("login") #go to login page
 
     def journal_for_user_and_day(request, username, journal_id):
         user = get_object_or_404(User, username=username)
@@ -61,20 +81,23 @@ class JournalList(generic.ListView):
             raise Http404("No Journal entry found for this date.")
 
         return render(request, 'journalbuddy/solo_journal.html', {'journal_entry': journal_entry})
-    
-    def pick_me_up(request):
-        user = get_object_or_404(User, username=request.user.username)
+
+class PickMeUp(generic.ListView):
+    model = Journal
+    template_name = "pick_me_up.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = get_object_or_404(User, username=self.request.user.username)
         try:
-            good_journals = Journal.objects.get(author = user, rate = 4 or 5)
+            good_journals = Journal.objects.filter(author=user, rate__gte=4)
             if(len(good_journals) > 0): #if there's more than 0 things in the user's "good" journals
                 random_item = random.choice(good_journals)
-                return render('pickmeup.html',{'good_journal':random_item})
-            else: #user has no good things
-                #don't know what to do yet
-                # Maybe something like we're sorry you're having a bad day (lol)
-                print("test")
+                context["random_item"] = random_item
+                context["item_found"] = True
         except:
-            raise Http404("Getting good journals didn't work")
+            context["item_found"] = False
+        return context
 
 
 
@@ -145,8 +168,17 @@ def user_home(request):
             todayexists = False
     except Journal.DoesNotExist:
         todayexists = False
-    print(todayexists)
-    return render(request, 'journalbuddy/user_home.html', {'username': request.user.username, 'todayexists' :todayexists})
+
+# api call for random quote
+
+    url = "https://zenquotes.io/api/random"
+    response = requests.request("GET", url)
+    if (response.status_code == 200):
+        json_data = response.json()
+        q = json_data[0]["q"]
+    else:
+        q = "You are worthy of happiness and peace of mind."
+    return render(request, 'journalbuddy/user_home.html', {'username': request.user.username, 'todayexists' :todayexists, "quote": q})
 
 @login_required
 def edit_entry(request, entry_id):

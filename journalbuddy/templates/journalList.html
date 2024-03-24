@@ -32,8 +32,9 @@
 
 
         <div class="container">
-        {% for entry in entries %}
             <a href="{% url 'journalbuddy:edit_entry' entry.id %}" class="btn btn-primary">Edit</a>
+        {% for entry in entries %}
+
 
             <div class="card">
                 <div class="card-body">
@@ -45,8 +46,12 @@
         {% empty %}
             <p>No journal entries found.</p>
         {% endfor %}
-    </div>
-
+      </div>
+      {% if todayexists == False %}
+        <script>
+            document.getElementById('journal').hidden = false;//unhides journal on nav bar
+        </script>
+    {% endif %}
 
 
   </body>

@@ -9,7 +9,6 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,27 +18,20 @@
     />
     <meta name="description" content="Journal Buddy" />
     <meta name="keywords" content="mental health, journaling" />
-    <title>Sign Up</title>
-    <style>
-      #signup-main {
-        margin-left: 100px;
-        margin-top: 100px;
-      }
-      p {
-        max-width: 198px;
-      }
-
-    </style>
+    <title>Pick Me Up!</title>
   </head>
   <body>
-    <div id="signup-main">>
-      <h1> Sign Up </h1>
-      <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit"> Sign Up </button>
-        <a href="{% url 'journalbuddy:login' %}"> Already have account? </a>
-      </form>
-    </div>
+    {% include 'journalbuddy/navbar.html' %}
+    {% if item_found %}
+        <h1> I'm sorry to hear you're feeling bad. </h1>
+        <h2> Here's a journal entry from a good day! </h2>
+        <div id="entry">
+            <p>
+                {{ random_item.date }} : {{ random_item.content }}
+            </p>
+        </div>
+    {% else %}
+        <p id="random-failed"> We couldn't find a journal entry with a good day. </p>
+    {% endif %}
   </body>
 </html>

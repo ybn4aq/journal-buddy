@@ -31,7 +31,12 @@
         <!-- Personalized Greeting -->
         <h4 class="mt-4 mb-5">Hi, {{ username }}, I'm your journal buddy! From here, you can view past journals,
         create a new one for today, or receive a special 'pick me up' if you're having a rough day.</h4>
-
+            <div class = quote>
+             
+                <h3>{{ quote }} </h3>
+             
+            </div>
+        
         <!-- Boxes/Sections with Increased Top Margin -->
 <div class="row justify-content-center mt-10"> <!-- Increased top margin with mt-5 -->
     <div class="col-md-4 mb-4">
@@ -57,7 +62,7 @@
             <div class="card-body">
                 <h4 class="card-title">Pick Me Up</h4>
                 <p class="card-text">Having a bad day?</p>
-                <button class="btn btn-secondary" disabled>Pick Me Up</button>
+                <a href="/cheerup" class="btn btn-primary">Pick Me Up</a>
             </div>
         </div>
     </div>
