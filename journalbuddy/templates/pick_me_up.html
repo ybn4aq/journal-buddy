@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
   <head>
     <!-- Include BootStrap -->
@@ -20,11 +21,17 @@
     <title>Pick Me Up!</title>
   </head>
   <body>
-    <h1> I'm sorry to hear you're feeling bad. Here's a journal entry from a good day! </h1>
-    <div id="entry">
-        <p>
-            {{ random_item.content }}
-        </p>
-    </div>
+    {% include 'journalbuddy/navbar.html' %}
+    {% if item_found %}
+        <h1> I'm sorry to hear you're feeling bad. </h1>
+        <h2> Here's a journal entry from a good day! </h2>
+        <div id="entry">
+            <p>
+                {{ random_item.date }} : {{ random_item.content }}
+            </p>
+        </div>
+    {% else %}
+        <p id="random-failed"> We couldn't find a journal entry with a good day. </p>
+    {% endif %}
   </body>
 </html>
