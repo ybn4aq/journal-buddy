@@ -69,7 +69,8 @@ class JournalList(generic.ListView):
                 random_item = random.choice(good_journals)
                 return render('pickmeup.html',{'good_journal':random_item})
             else: #user has no good things
-                #don't know what to do yet     
+                #don't know what to do yet
+                # Maybe something like we're sorry you're having a bad day (lol)
                 print("test")
         except:
             raise Http404("Getting good journals didn't work")
