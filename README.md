@@ -1,0 +1,2 @@
+# Journal Buddy
+Welcome to Journal Buddy! This project was created in under 24 hours during HooHacks 2024 by a team of UVA students. The website was developed using Django and acts as a personal journal for a user. A user is able to log in and submit one journal per day. They can view their past journals as well. If a user has a bad day (determined by a journal with a low rating), either a pick-me-up quote or a past high-rated journal will appear on the home screen to lift their spirits!
